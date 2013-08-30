@@ -5,7 +5,7 @@ import com.blox.framework.v0.util.Game;
 import com.blox.framework.v0.util.Rotation;
 import com.blox.framework.v0.util.Vector;
 
-class AnimatedControlDrawableAdapter extends ControlDrawableAdapter {
+class AnimatedControlDrawingInfo extends ControlDrawingInfo {
 	private Vector scale;
 	private Rotation rotation;
 	private float state;
@@ -14,7 +14,7 @@ class AnimatedControlDrawableAdapter extends ControlDrawableAdapter {
 	private float dx;
 	private float dy;
 
-	protected AnimatedControlDrawableAdapter(DrawableControl control, float cx, float cy, float dx, float dy) {
+	protected AnimatedControlDrawingInfo(DrawableControl control, float cx, float cy, float dx, float dy) {
 		super(control);
 		scale = new Vector();
 		rotation = new Rotation();

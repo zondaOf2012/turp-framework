@@ -1,11 +1,13 @@
 package com.blox.framework.v0.forms.xml;
 
 import com.blox.framework.v0.IDrawable;
+import com.blox.framework.v0.IDrawingInfo;
+import com.blox.framework.v0.util.Color;
 import com.blox.framework.v0.util.Game;
 import com.blox.framework.v0.util.Rotation;
 import com.blox.framework.v0.util.Vector;
 
-class ControlDrawableAdapter implements IDrawable {
+class ControlDrawingInfo implements IDrawingInfo, IDrawable {
 	
 	private static final Vector noScale = new Vector(1, 1, 1);
 	private static final Rotation noRotation = new Rotation();
@@ -13,12 +15,14 @@ class ControlDrawableAdapter implements IDrawable {
 	private float width;
 	private float height;
 	private Vector location;
+	private Color color;
 	
-	private final DrawableControl control;
+	protected final DrawableControl control;
 
-	protected ControlDrawableAdapter(DrawableControl control) {
+	protected ControlDrawingInfo(DrawableControl control) {
 		this.control = control;
-		this.location = new Vector();	
+		this.location = new Vector();
+		this.color = Color.White;
 	}
 	
 	protected void update(Form layout) {
@@ -55,6 +59,11 @@ class ControlDrawableAdapter implements IDrawable {
 	@Override
 	public Rotation getRotation() {
 		return noRotation;
+	}
+
+	@Override
+	public Color getColor() {
+		return color;
 	}
 
 	@Override
