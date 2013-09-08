@@ -5,7 +5,11 @@ import com.blox.framework.v0.IMover;
 import com.blox.framework.v0.util.Game;
 import com.blox.framework.v0.util.Vector;
 
-public class Mover1 implements IMover {
+public class TargetMover implements IMover {
+	public static interface IMoveEndListener {
+		boolean moveEnd(TargetMover mover, IMovable movable);
+	}
+
 	protected Vector start;
 	protected Vector end;
 	protected float duration;
@@ -18,17 +22,23 @@ public class Mover1 implements IMover {
 	protected float vy;
 	protected boolean stopped;
 
-	public Mover1(Vector start, Vector end, float duration) {
-		this.start = new Vector(start);
-		this.end = new Vector(end);
-		this.duration = duration;
-		
-		vx = (end.x - start.x) / duration;
-		vy = (end.y - start.y) / duration;
+	protected IMoveEndListener endListener;
 
-		distToTarget = end.dist2(start);
+	public TargetMover(float duration) {
+		this.start = new Vector();
+		this.end = new Vector();
+		this.duration = duration;
 	}
 
+	public void updateRoute(Vector start, Vector end) {
+
+		this.start.set(start);
+		this.end.set(end);
+		
+		this.target = null;
+		this.updateVelocity();
+	}
+	
 	public Vector getStart() {
 		return start;
 	}
@@ -43,6 +53,17 @@ public class Mover1 implements IMover {
 
 	public void setDuration(float duration) {
 		this.duration = duration;
+		this.updateVelocity();
+	}
+	
+	public void start() {
+		stopped = false;
+		this.distToTarget = end.dist2(start);
+	}
+	
+	public void stop() {
+		stopped = true;
+		this.distToTarget = 0;
 	}
 
 	public boolean isLooping() {
@@ -53,11 +74,20 @@ public class Mover1 implements IMover {
 		this.looping = looping;
 	}
 
+	public void setMoveEndListener(IMoveEndListener listener) {
+		endListener = listener;
+	}
+
+	protected void updateVelocity() {
+		vx = (end.x - start.x) / duration;
+		vy = (end.y - start.y) / duration;		
+	}
+	
 	@Override
 	public void move(IMovable movable) {
 		if (stopped)
 			return;
-		
+
 		float dt = Game.getDeltaTime();
 		Vector loc = movable.getLocation();
 
@@ -70,14 +100,19 @@ public class Mover1 implements IMover {
 			float dist2 = target.dist2(loc);
 
 			if (dist2 > distToTarget) {
+				loc.x = target.x;
+				loc.y = target.y;
+				
+				if (endListener != null && endListener.moveEnd(this, movable)) {
+					
+					return;
+				}
+				
 				if (!looping) {
 					stopped = true;
 					return;
 				}
-				
-				loc.x = target.x;
-				loc.y = target.y;
-				
+
 				target = target == end ? start : end;
 				vx = -vx;
 				vy = -vy;

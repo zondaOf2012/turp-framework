@@ -4,7 +4,7 @@ import com.blox.framework.v0.IMovable;
 import com.blox.framework.v0.util.Game;
 import com.blox.framework.v0.util.Vector;
 
-public class Mover2 extends Mover1 {
+public class TargetMover2 extends TargetMover {
 	final static int SpeedUp = 0;
 	final static int SlowDown = 1;
 
@@ -20,22 +20,30 @@ public class Mover2 extends Mover1 {
 	private SlowDownCalculator calcX;
 	private SlowDownCalculator calcY;
 
-	public Mover2(Vector start, Vector end, float duration, float slowDownStartPos, float slowDownStartTime) {
-		super(start, end, duration);
+	public TargetMover2(float duration, float slowDownStartPos, float slowDownStartTime) {
+		super(duration);
 
+		this.slowDownStartPos = slowDownStartPos;
+		this.slowDownStartTime = slowDownStartTime;
+
+		this.calcX = new SlowDownCalculator();
+		this.calcY = new SlowDownCalculator();
+	}
+	
+	@Override
+	public void updateRoute(Vector start, Vector end) {
+		super.updateRoute(start, end);
+		this.distAll = end.dist(start);
+	}
+
+	@Override
+	protected void updateVelocity() {
 		vx = 0;
 		vy = 0;
 
 		float slowDownTime2 = duration * slowDownStartTime * duration * slowDownStartTime;
 		ax = 2 * (end.x - start.x) * slowDownStartPos / slowDownTime2;
 		ay = 2 * (end.y - start.y) * slowDownStartPos / slowDownTime2;
-
-		this.distAll = end.dist(start);
-		this.slowDownStartPos = slowDownStartPos;
-		this.slowDownStartTime = slowDownStartTime;
-
-		this.calcX = new SlowDownCalculator();
-		this.calcY = new SlowDownCalculator();
 	}
 
 	@Override
@@ -55,6 +63,14 @@ public class Mover2 extends Mover1 {
 			float dist = target.dist(loc);
 
 			if (dist > distToTarget) {
+				loc.x = target.x;
+				loc.y = target.y;
+
+				if (endListener != null && endListener.moveEnd(this, movable)) {
+
+					return;
+				}
+				
 				if (!looping) {
 					stopped = true;
 					return;
@@ -62,9 +78,6 @@ public class Mover2 extends Mover1 {
 
 				state = SpeedUp;
 				slowDownTimeElapsed = 0;
-
-				loc.x = target.x;
-				loc.y = target.y;
 
 				target = target == end ? start : end;
 
@@ -94,7 +107,7 @@ public class Mover2 extends Mover1 {
 			ay = calcY.calculateAcceleration(slowDownTimeElapsed);
 			vx = calcX.calculateVelocity(slowDownTimeElapsed);
 			vy = calcY.calculateVelocity(slowDownTimeElapsed);
-			
+
 			loc.x += vx * dt;
 			loc.y += vy * dt;
 		}
@@ -107,12 +120,7 @@ public class Mover2 extends Mover1 {
 		}
 	}
 
-	public void drawInfo() {
-//		Game.getTextDrawer().draw(slowDownTimeElapsed + "", 10, Game.getViewportHeight() - 20);
-//		Game.getTextDrawer().draw(timeElapsed + "", 10, Game.getViewportHeight() - 40);
-	}
-
-	public static class SlowDownCalculator {
+	private static class SlowDownCalculator {
 		private float a;
 		private float b;
 		private float c;
