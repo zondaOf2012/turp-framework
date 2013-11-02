@@ -12,7 +12,7 @@ import com.turpgames.framework.v0.util.Color;
 import com.turpgames.framework.v0.util.Game;
 import com.turpgames.framework.v0.util.Utils;
 
-public class Button extends DrawableControl implements ILanguageListener {
+public class FormButton extends DrawableControl implements ILanguageListener {
 	private final static Color white = Color.white();
 
 	private final Text text;
@@ -25,7 +25,7 @@ public class Button extends DrawableControl implements ILanguageListener {
 
 	private String resource_text;
 
-	Button() {
+	FormButton() {
 		style = new Style();
 		clickListeners = new ArrayList<IClickListener>();
 		text = new AttachedText(drawable); 
