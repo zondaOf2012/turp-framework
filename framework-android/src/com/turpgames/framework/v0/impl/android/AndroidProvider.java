@@ -1,4 +1,4 @@
-package com.turpgames.framework.impl.android;
+package com.turpgames.framework.v0.impl.android;
 
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
