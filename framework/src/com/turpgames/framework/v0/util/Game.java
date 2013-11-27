@@ -36,7 +36,7 @@ public final class Game {
 
 	private static Version osVersion;
 	private static Version gameVersion;
-	
+
 	public static IEnvironmentProvider environmentProvider;
 
 	private static DisposeManager disposeManager;
@@ -55,7 +55,8 @@ public final class Game {
 	private static float renderingShiftX = 0;
 	private static float renderingShiftY = 0;
 
-	public static void pushRenderingShift(float x, float y, boolean ignoreViewport) {
+	public static void pushRenderingShift(float x, float y,
+			boolean ignoreViewport) {
 		float shiftX = ignoreViewport ? x : Game.scale(x);
 		float shiftY = ignoreViewport ? y : Game.scale(y);
 
@@ -70,8 +71,7 @@ public final class Game {
 		if (renderingShifts.size() > 0) {
 			renderingShiftY -= renderingShifts.pop();
 			renderingShiftX -= renderingShifts.pop();
-		}
-		else {
+		} else {
 			renderingShiftX = 0;
 			renderingShiftY = 0;
 		}
@@ -98,7 +98,8 @@ public final class Game {
 	public static void initialize(Document gameXml) {
 		GameMetadata.load(gameXml);
 
-		provider = (IGameProvider) Utils.createInstance(GameMetadata.getParam("provider"));
+		provider = (IGameProvider) Utils.createInstance(GameMetadata
+				.getParam("provider"));
 
 		disposeManager = new DisposeManager();
 
@@ -116,7 +117,12 @@ public final class Game {
 		actionHandlerFactory = new ControlActionHandlerFactory();
 		collisionDetectorFactory = new CollisionDetectorFactory();
 
-		osVersion = new Version(System.getProperty("os.version"));
+		try {
+			osVersion = new Version(System.getProperty("os.version"));
+		} catch (Throwable t) {
+			t.printStackTrace();
+			osVersion = new Version("1.0");
+		}
 		
 		if (environmentProvider == null)
 			gameVersion = new Version(GameMetadata.getGameVersion());
@@ -247,7 +253,8 @@ public final class Game {
 		float screenWidth = Gdx.graphics.getWidth();
 		float screenHeight = Gdx.graphics.getHeight();
 
-		viewport = Viewport.create(virtualWidth, virtualHeight, screenWidth, screenHeight);
+		viewport = Viewport.create(virtualWidth, virtualHeight, screenWidth,
+				screenHeight);
 	}
 
 	public static void updateViewport(float screenWidth, float screenHeight) {
