@@ -8,6 +8,7 @@ import org.robovm.cocoatouch.foundation.NSString;
 import org.robovm.rt.bro.ptr.Ptr;
 
 import com.turpgames.framework.v0.IEnvironmentProvider;
+import com.turpgames.framework.v0.social.ISocializer;
 import com.turpgames.framework.v0.util.Version;
 
 public class IOSProvider implements IEnvironmentProvider {
@@ -50,5 +51,11 @@ public class IOSProvider implements IEnvironmentProvider {
 			}
 		}
 		return version;
+	}
+	
+	@Override
+	public ISocializer getSocializer() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -36,13 +36,13 @@ public class Utils {
 	}
 
 	public static boolean isIn(float x, float y, IDrawingInfo drawingInfo) {
-		return isIn(x, y,
-				drawingInfo.getLocation().x, drawingInfo.getLocation().y,
-				drawingInfo.getWidth(), drawingInfo.getHeight(),
-				drawingInfo.ignoreViewport());
+		return isIn(x, y, drawingInfo.getLocation().x,
+				drawingInfo.getLocation().y, drawingInfo.getWidth(),
+				drawingInfo.getHeight(), drawingInfo.ignoreViewport());
 	}
 
-	private static boolean isIn(float x, float y, float lx, float ly, float width, float height, boolean ignoreViewport) {
+	private static boolean isIn(float x, float y, float lx, float ly,
+			float width, float height, boolean ignoreViewport) {
 		if (!ignoreViewport) {
 			x = Game.screenToViewportX(x);
 			y = Game.screenToViewportY(y);
@@ -91,26 +91,32 @@ public class Utils {
 		return null;
 	}
 
-	public static List<Node> findChildNodesByAttributeValue(Node node, String childNodeName, String attributeName, String attributeValue) {
+	public static List<Node> findChildNodesByAttributeValue(Node node,
+			String childNodeName, String attributeName, String attributeValue) {
 		NodeList childNodes = node.getChildNodes();
 
 		List<Node> list = new ArrayList<Node>();
 
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			Node child = childNodes.item(i);
-			if (childNodeName.equals(child.getNodeName()) && attributeValue.equals(getAttributeValue(child, attributeName)))
+			if (childNodeName.equals(child.getNodeName())
+					&& attributeValue.equals(getAttributeValue(child,
+							attributeName)))
 				list.add(child);
 		}
 
 		return list;
 	}
 
-	public static Node findChildNodeByAttributeValue(Node node, String childNodeName, String attributeName, String attributeValue) {
+	public static Node findChildNodeByAttributeValue(Node node,
+			String childNodeName, String attributeName, String attributeValue) {
 		NodeList childNodes = node.getChildNodes();
 
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			Node child = childNodes.item(i);
-			if (childNodeName.equals(child.getNodeName()) && attributeValue.equals(getAttributeValue(child, attributeName)))
+			if (childNodeName.equals(child.getNodeName())
+					&& attributeValue.equals(getAttributeValue(child,
+							attributeName)))
 				return child;
 		}
 
@@ -125,15 +131,14 @@ public class Utils {
 
 	public static Document loadXml(InputStream is) {
 		try {
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilderFactory factory = DocumentBuilderFactory
+					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			return builder.parse(is);
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
-		}
-		finally {
+		} finally {
 			close(is);
 		}
 	}
@@ -141,8 +146,7 @@ public class Utils {
 	public static Object createInstance(String className) {
 		try {
 			return Class.forName(className).newInstance();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -227,7 +231,8 @@ public class Utils {
 	public static String getTimeString(int time) {
 		int min = time / 60;
 		int sec = time % 60;
-		return (min < 10 ? ("0" + min) : ("" + min)) + ":" + (sec < 10 ? ("0" + sec) : ("" + sec));
+		return (min < 10 ? ("0" + min) : ("" + min)) + ":"
+				+ (sec < 10 ? ("0" + sec) : ("" + sec));
 	}
 
 	public static void close(Closeable closable) {
@@ -235,9 +240,16 @@ public class Utils {
 			return;
 		try {
 			closable.close();
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			// ignore
+			e.printStackTrace();
+		}
+	}
+
+	public static void threadSleep(int millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}

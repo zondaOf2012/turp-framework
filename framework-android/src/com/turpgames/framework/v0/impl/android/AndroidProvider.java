@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 
 import com.turpgames.framework.v0.IEnvironmentProvider;
+import com.turpgames.framework.v0.social.ISocializer;
+import com.turpgames.framework.v0.social.impl.android.AndroidSocializer;
 import com.turpgames.framework.v0.util.Version;
 
 public class AndroidProvider implements IEnvironmentProvider {
@@ -14,7 +16,8 @@ public class AndroidProvider implements IEnvironmentProvider {
 	}
 
 	private Version version;
-
+	private ISocializer socializer;
+	
 	@Override
 	public Version getVersion() {
 		if (version == null) {
@@ -28,5 +31,12 @@ public class AndroidProvider implements IEnvironmentProvider {
 			}
 		}
 		return version;
+	}
+
+	@Override
+	public ISocializer getSocializer() {
+		if (socializer == null)
+			socializer = new AndroidSocializer(context);
+		return socializer;
 	}
 }
