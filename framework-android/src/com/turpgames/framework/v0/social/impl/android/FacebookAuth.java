@@ -41,7 +41,23 @@ class FacebookAuth implements ISocialAuth {
 		@Override
 		public void onComplete(Bundle values) {
 			int x = 1;
-			callback.onLoginSuccess(adapter.getUserProfile().getValidatedId());
+			Profile p = adapter.getUserProfile();
+			callback.onLoginSuccess(p.getValidatedId());
+			
+			System.out.println("user-id:       " + p.getValidatedId());
+			System.out.println("display-name:  " + p.getDisplayName());
+			System.out.println("first-name:    " + p.getFirstName());
+			System.out.println("last-name:     " + p.getLastName());
+			System.out.println("full-name:     " + p.getFullName());
+			System.out.println("email:         " + p.getEmail());
+			System.out.println("date-of-birth: " + p.getDob());
+			System.out.println("gender:        " + p.getGender());
+			System.out.println("language:      " + p.getLanguage());
+			System.out.println("country:       " + p.getCountry());
+			System.out.println("location:      " + p.getLocation());
+			System.out.println("img-url:       " + p.getProfileImageURL());
+			System.out.println("provider-id:   " + p.getProviderId());
+			
 		}
 		
 		@Override
