@@ -1,5 +1,6 @@
 package com.turpgames.framework.v0.social.impl.android;
 
+import org.brickred.socialauth.Profile;
 import org.brickred.socialauth.android.DialogListener;
 import org.brickred.socialauth.android.SocialAuthAdapter;
 import org.brickred.socialauth.android.SocialAuthAdapter.Provider;
