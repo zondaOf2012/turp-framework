@@ -1,4 +1,4 @@
-package com.turpgames.framework.impl.ios;
+package com.turpgames.framework.v0.impl.ios;
 
 import org.robovm.cocoatouch.foundation.NSBundle;
 import org.robovm.cocoatouch.foundation.NSDictionary;
