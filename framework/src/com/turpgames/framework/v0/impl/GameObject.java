@@ -45,7 +45,11 @@ public abstract class GameObject implements IInputListener, IDrawingInfo, IDrawa
 
 		mover = IMover.NULL;
 	}
-
+	
+	protected void addBound(IBound bound) {
+		bounds.add(bound);
+	}
+	
 	public void setWidth(float width) {
 		this.width = width;
 	}

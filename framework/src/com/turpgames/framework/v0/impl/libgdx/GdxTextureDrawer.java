@@ -35,7 +35,7 @@ final class GdxTextureDrawer implements ITextureDrawer {
 				l.x, l.y,
 				r.origin.x, r.origin.y,
 				info.getWidth(), info.getHeight(),
-				s.x, s.y, r.rotation.z, 0, 0,
+				s.x, s.y, r.angle.z, 0, 0,
 				texture.getWidth(), texture.getHeight(),
 				info.isFlipX(), info.isFlipY());
 	}
@@ -51,6 +51,6 @@ final class GdxTextureDrawer implements ITextureDrawer {
 				l.x, l.y, 
 				r.origin.x, r.origin.y, 
 				info.getWidth(), info.getHeight(), 
-				s.x, s.y, r.rotation.z);
+				s.x, s.y, r.angle.z);
 	}
 }
