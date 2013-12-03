@@ -25,8 +25,8 @@ class FacebookAuth implements ISocialAuth {
 	}
 	
 	public void login(final ILoginCallback callback) {
-		adapter.authorize(context, Provider.FACEBOOK);
 		dialogListener.callback = callback;
+		adapter.authorize(context, Provider.FACEBOOK);
 	}
 	
 	private static class MyDialogListener implements DialogListener {
@@ -44,6 +44,8 @@ class FacebookAuth implements ISocialAuth {
 			int x = 1;
 			Profile p = adapter.getUserProfile();
 			callback.onLoginSuccess(p.getValidatedId());
+			
+			adapter.getCurrentProvider().getAccessGrant().getKey();
 			
 			System.out.println("user-id:       " + p.getValidatedId());
 			System.out.println("display-name:  " + p.getDisplayName());
