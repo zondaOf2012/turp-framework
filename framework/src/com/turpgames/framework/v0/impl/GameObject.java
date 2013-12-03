@@ -244,6 +244,16 @@ public abstract class GameObject implements IInputListener, IDrawingInfo, IDrawa
 	// region ICollidable
 
 	@Override
+	public void onCollide(ICollidable thatObj, IBound thisBound, IBound thatBound) {
+		
+	}
+
+	@Override
+	public void onNotcollide(ICollidable thatObj, IBound thisBound, IBound thatBound) {
+		
+	}
+	
+	@Override
 	public Iterator<IBound> getBounds() {
 		return bounds.iterator();
 	}

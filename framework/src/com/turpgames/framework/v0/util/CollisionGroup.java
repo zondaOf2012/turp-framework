@@ -88,6 +88,8 @@ public class CollisionGroup implements ICollisionGroup {
 			ICollisionListener l = itr.next();
 			l.onCollide(event);
 		}
+		event.getThisObj().onCollide(event.getThatObj(), event.getThisBound(), event.getThatBound());
+		event.getThatObj().onCollide(event.getThisObj(), event.getThatBound(), event.getThisBound());
 		return false;
 	}
 
@@ -111,6 +113,8 @@ public class CollisionGroup implements ICollisionGroup {
 			ICollisionListener l = itr.next();
 			l.onNotCollide(event);
 		}
+		event.getThisObj().onNotcollide(event.getThatObj(), event.getThisBound(), event.getThatBound());
+		event.getThatObj().onNotcollide(event.getThisObj(), event.getThatBound(), event.getThisBound());
 		return false;
 	}
 

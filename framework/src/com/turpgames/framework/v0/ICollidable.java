@@ -6,6 +6,10 @@ import com.turpgames.framework.v0.util.Rotation;
 import com.turpgames.framework.v0.util.Vector;
 
 public interface ICollidable {
+	void onCollide(ICollidable thatObj, IBound thisBound, IBound thatBound);
+	
+	void onNotcollide(ICollidable thatObj, IBound thisBound, IBound thatBound);
+	
 	Iterator<IBound> getBounds();
 
 	Vector getLocation();
@@ -19,5 +23,4 @@ public interface ICollidable {
 	boolean isFlipX();
 
 	boolean isFlipY();
-
 }

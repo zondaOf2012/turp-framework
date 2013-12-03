@@ -7,12 +7,11 @@ import com.turpgames.framework.v0.util.Animation;
 import com.turpgames.framework.v0.util.Animator;
 import com.turpgames.framework.v0.util.TextureDrawer;
 
-public abstract class AnimatedGameObject extends GameObject implements IAnimationEndListener {
+public abstract class AnimatedGameObject extends GameObject {
 	protected Animator animator;
 
 	protected AnimatedGameObject() {
 		animator = new Animator();
-		animator.registerEndListener(this);
 	}
 
 	protected Animation addAnimation(String animationId) {
@@ -28,9 +27,12 @@ public abstract class AnimatedGameObject extends GameObject implements IAnimatio
 		animator.removeAnimation(name);
 	}
 
-	@Override
-	public void onAnimationEnd(Animation animation) {
+	public void registerAnimationEndListener(IAnimationEndListener listener) {
+		animator.registerEndListener(listener);
+	}
 
+	public void unregisterAnimationEndListener(IAnimationEndListener listener) {
+		animator.unregisterEndListener(listener);
 	}
 
 	protected void stopAnimation() {

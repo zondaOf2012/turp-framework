@@ -1,6 +1,5 @@
 package com.turpgames.framework.v0.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.turpgames.framework.v0.ICollidable;
@@ -8,20 +7,7 @@ import com.turpgames.framework.v0.ICollisionGroup;
 import com.turpgames.framework.v0.util.CollisionDetector;
 
 public class CollisionManager extends Manager<ICollisionGroup> {
-	private List<ICollisionGroup> groups;
-
 	public CollisionManager() {
-		groups = new ArrayList<ICollisionGroup>();
-	}
-
-	@Override
-	public void register(ICollisionGroup obj) {
-		groups.add(obj);
-	}
-
-	@Override
-	public void unregister(ICollisionGroup obj) {
-		groups.remove(obj);
 	}
 
 	@Override
