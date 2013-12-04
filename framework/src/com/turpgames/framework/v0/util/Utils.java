@@ -3,10 +3,14 @@ package com.turpgames.framework.v0.util;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -25,6 +29,15 @@ public class Utils {
 	public static final int LAYER_DIALOG = 4;
 
 	private static final Random rnd = new Random();
+	private static MessageDigest sha1;
+	
+	static {
+		try {
+			sha1 = MessageDigest.getInstance("SHA-1");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static String readUtf8String(InputStream is) throws IOException {
 		StringBuffer strBuffer = new StringBuffer();
@@ -252,5 +265,16 @@ public class Utils {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static String digest(String plainUtf8Text) {
+		try {
+			byte[] bytes = plainUtf8Text.getBytes("UTF-8");
+			byte[] digest = sha1.digest(bytes);
+			return DatatypeConverter.printHexBinary(digest);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

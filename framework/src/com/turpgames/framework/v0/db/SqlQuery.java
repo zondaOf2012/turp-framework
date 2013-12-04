@@ -43,6 +43,12 @@ public class SqlQuery {
 		return this;
 	}
 
+	/**
+	 * 
+	 * @param value
+	 * @param sqlType: java.sql.Types.*
+	 * @return
+	 */
 	public SqlQuery addParameter(Object value, int sqlType) {
 		addParameter(new SqlParameter(value, sqlType));
 		return this;
