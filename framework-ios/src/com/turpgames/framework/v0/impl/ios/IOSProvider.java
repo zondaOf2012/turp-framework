@@ -9,6 +9,7 @@ import org.robovm.rt.bro.ptr.Ptr;
 
 import com.turpgames.framework.v0.IEnvironmentProvider;
 import com.turpgames.framework.v0.social.ISocializer;
+import com.turpgames.framework.v0.social.impl.ios.IOSSocializer;
 import com.turpgames.framework.v0.util.Version;
 
 public class IOSProvider implements IEnvironmentProvider {
@@ -35,6 +36,7 @@ public class IOSProvider implements IEnvironmentProvider {
 				if (mainBundle == null)
 					throw new Exception("mainBundle is null");
 				
+				@SuppressWarnings("rawtypes")
 				NSDictionary infoDictionary = mainBundle.getInfoDictionary();
 				if (infoDictionary == null)
 					throw new Exception("infoDictionary is null");
@@ -55,7 +57,6 @@ public class IOSProvider implements IEnvironmentProvider {
 	
 	@Override
 	public ISocializer getSocializer() {
-		// TODO Auto-generated method stub
-		return null;
+		return new IOSSocializer();
 	}
 }

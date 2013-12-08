@@ -26,7 +26,7 @@ public class AndroidSocializer implements ISocializer {
 		((Activity) context).runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if ("facebook" == key)
+				if ("facebook".equals(key))
 					auths.put(key, new FacebookAuth(context));
 				else
 					auths.put(key, ISocialAuth.NULL);
@@ -34,7 +34,7 @@ public class AndroidSocializer implements ISocializer {
 		});
 
 		while (!auths.containsKey(key))
-			Utils.threadSleep(100);
+			Utils.threadSleep(10);
 
 		return auths.get(key);
 	}
