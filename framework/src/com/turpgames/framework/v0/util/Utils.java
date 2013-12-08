@@ -199,6 +199,18 @@ public class Utils {
 		}
 	}
 
+	public static <T> void shuffle(List<T> list) {
+		int iter = list.size() * list.size();
+		while (iter-- > 0) {
+			int x = randInt(list.size());
+			int y = randInt(list.size()-1);
+
+			T tmp = list.get(x);
+			list.remove(x);
+			list.add(y, tmp);
+		}
+	}
+	
 	public static <T> void shuffle(T[] array, int start, int end) {
 		int iter = (start - end) * (start - end);
 		shuffle(array, start, end, iter);

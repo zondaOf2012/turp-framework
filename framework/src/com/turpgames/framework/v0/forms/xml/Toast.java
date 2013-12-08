@@ -126,7 +126,8 @@ public class Toast extends GameObject {
 	}
 	
 	private void endHide() {
-		Drawer.getCurrent().unregister(this);
+		if (Drawer.getCurrent() != null)
+			Drawer.getCurrent().unregister(this);
 		state = ToastHiddenState.instance;
 	}
 	
