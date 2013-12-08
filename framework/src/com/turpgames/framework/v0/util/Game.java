@@ -24,6 +24,7 @@ import com.turpgames.framework.v0.impl.CollisionDetectorFactory;
 import com.turpgames.framework.v0.impl.DisposeManager;
 import com.turpgames.framework.v0.impl.LanguageManager;
 import com.turpgames.framework.v0.metadata.GameMetadata;
+import com.turpgames.framework.v0.social.ISocializer;
 
 public final class Game {
 	private static Viewport viewport;
@@ -36,8 +37,9 @@ public final class Game {
 
 	private static Version osVersion;
 	private static Version gameVersion;
+	private static ISocializer socializer;
 
-	public static IEnvironmentProvider environmentProvider;
+	private static IEnvironmentProvider environmentProvider;
 
 	private static DisposeManager disposeManager;
 	private static IDeltaTime deltaTime;
@@ -94,6 +96,10 @@ public final class Game {
 	private Game() {
 
 	}
+	
+	public static void setEnvironmentProvider(IEnvironmentProvider environmentProvider) {
+		Game.environmentProvider = environmentProvider;
+	}
 
 	public static void initialize(Document gameXml) {
 		GameMetadata.load(gameXml);
@@ -124,10 +130,8 @@ public final class Game {
 			osVersion = new Version("1.0");
 		}
 		
-		if (environmentProvider == null)
-			gameVersion = new Version(GameMetadata.getGameVersion());
-		else
-			gameVersion = environmentProvider.getVersion();
+		socializer = environmentProvider.getSocializer();
+		gameVersion = environmentProvider.getVersion();
 
 		initViewport();
 
@@ -221,6 +225,10 @@ public final class Game {
 
 	public static Version getVersion() {
 		return gameVersion;
+	}
+	
+	public static ISocializer getSocializer() {
+		return socializer;
 	}
 
 	// region viewport
